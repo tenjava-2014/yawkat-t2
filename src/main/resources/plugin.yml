@@ -1,0 +1,3 @@
+name: yawkat-t2
+main: com.tenjava.entries.yawkat.t2.TenJava
+version: '${project.version}'
