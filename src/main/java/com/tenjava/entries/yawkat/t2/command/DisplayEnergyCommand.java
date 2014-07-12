@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Command to display own energy level.
+ *
  * @author yawkat
  */
 class DisplayEnergyCommand implements CommandExecutor {
