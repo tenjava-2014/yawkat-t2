@@ -44,8 +44,10 @@ public abstract class Module implements Listener {
     @SuppressWarnings("unchecked")
     public static <M extends Module> Optional<M> getModule(Class<M> type) {
         if (modules.containsKey(type)) {
+            // loaded and enabled in config
             return Optional.of((M) modules.get(type));
         } else {
+            // not loaded yet or disabled in config
             return Optional.empty();
         }
     }
