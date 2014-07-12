@@ -82,7 +82,9 @@ public class DischargeCommand extends CommandModule {
         // lightning effect
         on.getLocation().getWorld().strikeLightningEffect(on.getLocation());
 
-        on.getNearbyEntities(range, range, range).forEach(entity -> {
+        // whether energy was added to another player as a discharge effect
+        boolean forceTransmitted = false;
+        for (Entity entity : on.getNearbyEntities(range, range, range)) {
             double distance = entity.getLocation().distance(on.getLocation());
             // force of the electric shock (0-energy)
             double force = (1 - distance / range) * energy;
@@ -95,8 +97,12 @@ public class DischargeCommand extends CommandModule {
             // 1 = no resistance 0 = full resistance (no damage)
             double resistance = 1;
             if (entity instanceof Player) {
-                // store some additional energy in that player (0-force/2 to prevent loops)
-                Energy.addEnergy((Player) entity, force / 2);
+                // don't give energy to two players
+                if (!forceTransmitted) {
+                    // store some additional energy in that player (0-force/2 to prevent loops)
+                    Energy.addEnergy((Player) entity, force / 2);
+                    forceTransmitted = true;
+                }
                 // -0.25 resistance for each iron armor part
                 resistance -= IronArmorEnergyConsumer.getConductiveArmorCount((HumanEntity) entity) * 0.25;
             }
@@ -110,7 +116,7 @@ public class DischargeCommand extends CommandModule {
                                                                          (int) (force * resistance * 20),
                                                                          1));
             }
-        });
+        };
 
         double roundEnergy = Math.round(energy * 100) / 100;
         on.sendMessage(ChatColor.GOLD + "Discharged " +
