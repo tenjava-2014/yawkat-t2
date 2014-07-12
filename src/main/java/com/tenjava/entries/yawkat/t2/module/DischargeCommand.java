@@ -5,6 +5,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -68,11 +71,15 @@ public class DischargeCommand extends CommandModule {
             sender.sendMessage(Commands.ERROR_PREFIX + "Not enough energy!");
             return true;
         }
+        discharge((Player) sender, energy);
 
-        // range of the discharge
+        return true;
+    }
+
+    private void discharge(Player on, double energy) {// range of the discharge
         double range = energy * getConfig().<Double>get("max_range_per_unit");
-        ((Entity) sender).getNearbyEntities(range, range, range).forEach(entity -> {
-            double distance = entity.getLocation().distance(((Entity) sender).getLocation());
+        on.getNearbyEntities(range, range, range).forEach(entity -> {
+            double distance = entity.getLocation().distance(((Entity) on).getLocation());
             // force of the electric shock (0-energy)
             double force = (1 - distance / range) * energy;
             if (force < 0) {
@@ -91,7 +98,7 @@ public class DischargeCommand extends CommandModule {
             }
             if (entity instanceof Damageable) {
                 // apply damage (0-energy half hearts), shrinks with range
-                ((Damageable) entity).damage(force * resistance, (Entity) sender);
+                ((Damageable) entity).damage(force * resistance, (Entity) on);
             }
             if (entity instanceof LivingEntity) {
                 // apply blindness (0-energy seconds), shrinks with range
@@ -102,10 +109,22 @@ public class DischargeCommand extends CommandModule {
         });
 
         double roundEnergy = Math.round(energy * 100) / 100;
-        sender.sendMessage(ChatColor.GOLD + "Discharged " +
-                           ChatColor.AQUA + Commands.toDisplayString(roundEnergy) +
-                           ChatColor.GOLD + " energy!");
+        on.sendMessage(ChatColor.GOLD + "Discharged " +
+                       ChatColor.AQUA + Commands.toDisplayString(roundEnergy) +
+                       ChatColor.GOLD + " energy!");
+    }
 
-        return true;
+    @EventHandler
+    public void onUseItem(PlayerInteractEvent event) {
+        Module.getModule(Battery.class).ifPresent(battery -> {
+            if ((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) &&
+                battery.isBattery(event.getItem())) {
+                double charge = battery.getCharge(event.getItem());
+                // deplete
+                event.getPlayer().getInventory().setItem(event.getPlayer().getInventory().getHeldItemSlot(), null);
+                event.setCancelled(true);
+                discharge(event.getPlayer(), charge);
+            }
+        });
     }
 }
