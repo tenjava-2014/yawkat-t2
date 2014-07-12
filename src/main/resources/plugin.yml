@@ -17,6 +17,12 @@ permissions:
     energy.action.discharge:
         description: Allows using the /discharge command to discharge energy and damage enemies.
         default: true
+    energy.action.chargefurnace:
+        description: Allows a player to charge furnaces with energy.
+        default: true
+    energy.action.createbattery:
+        description: Allows a player to create batteries.
+        default: true
 commands:
     energy:
         description: Display your current energy level.
@@ -41,4 +47,8 @@ commands:
     charge:
         description: Charge a furnace with energy.
         usage: /<command> <energy amount>
-        permission: energy.action.discharge
+        permission: energy.action.chargefurnace
+    battery:
+        description: Create a battery.
+        usage: /<command> <charge>
+        permission: energy.action.createbattery
