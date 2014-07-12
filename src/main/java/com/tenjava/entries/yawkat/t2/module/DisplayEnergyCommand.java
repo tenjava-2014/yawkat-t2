@@ -22,6 +22,7 @@ public class DisplayEnergyCommand extends CommandModule {
         Player target;
         // player specified
         if (args.length >= 1) {
+            //noinspection deprecation
             target = Bukkit.getPlayer(args[0]);
             // not online
             if (target == null) {

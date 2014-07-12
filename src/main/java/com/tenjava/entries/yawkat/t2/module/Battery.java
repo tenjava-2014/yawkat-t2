@@ -39,6 +39,7 @@ public class Battery extends CommandModule {
         getConfig().setDefault("name", ChatColor.AQUA + "Battery (Charge: %.2f)");
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player)) {

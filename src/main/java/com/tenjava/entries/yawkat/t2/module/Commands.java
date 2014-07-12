@@ -1,6 +1,5 @@
 package com.tenjava.entries.yawkat.t2.module;
 
-import com.tenjava.entries.yawkat.t2.TenJava;
 import org.bukkit.ChatColor;
 
 /**

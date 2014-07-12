@@ -79,7 +79,7 @@ public class DischargeCommand extends CommandModule {
     private void discharge(Player on, double energy) {// range of the discharge
         double range = energy * getConfig().<Double>get("max_range_per_unit");
         on.getNearbyEntities(range, range, range).forEach(entity -> {
-            double distance = entity.getLocation().distance(((Entity) on).getLocation());
+            double distance = entity.getLocation().distance(on.getLocation());
             // force of the electric shock (0-energy)
             double force = (1 - distance / range) * energy;
             if (force < 0) {
@@ -98,7 +98,7 @@ public class DischargeCommand extends CommandModule {
             }
             if (entity instanceof Damageable) {
                 // apply damage (0-energy half hearts), shrinks with range
-                ((Damageable) entity).damage(force * resistance, (Entity) on);
+                ((Damageable) entity).damage(force * resistance, on);
             }
             if (entity instanceof LivingEntity) {
                 // apply blindness (0-energy seconds), shrinks with range

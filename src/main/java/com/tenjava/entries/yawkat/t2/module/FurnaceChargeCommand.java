@@ -59,6 +59,7 @@ public class FurnaceChargeCommand extends CommandModule {
             return true;
         }
 
+        @SuppressWarnings("deprecation")
         Block lookingAt = ((LivingEntity) sender).getTargetBlock(null, 4);
         if (lookingAt == null || lookingAt.getType() != Material.FURNACE) {
             sender.sendMessage(Commands.ERROR_PREFIX + "You need to look at a furnace!");
@@ -74,6 +75,7 @@ public class FurnaceChargeCommand extends CommandModule {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Module.getModule(Battery.class).ifPresent(battery -> {

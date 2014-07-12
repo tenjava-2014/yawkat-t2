@@ -33,6 +33,7 @@ public class StrikeCommand extends CommandModule {
         }
 
         // get target
+        @SuppressWarnings("deprecation")
         Block target = ((LivingEntity) sender).getTargetBlock(null, getConfig().get("max_distance"));
         if (target == null) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Target is out of reach!");
