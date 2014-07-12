@@ -45,6 +45,7 @@ public class TenJava extends JavaPlugin {
         Commands.registerCommands();
         PersistedPlayerData.init();
 
+        getServer().getPluginManager().registerEvents(new EnergyLoader(), this);
     }
 
     @Override

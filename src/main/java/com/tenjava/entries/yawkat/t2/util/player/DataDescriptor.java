@@ -1,7 +1,9 @@
 package com.tenjava.entries.yawkat.t2.util.player;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import org.bukkit.entity.Player;
 
 /**
  * Describes a cell in a PlayerData object. Can be kept as a static field, for example
@@ -23,21 +25,25 @@ public class DataDescriptor<T> {
     /**
      * Default value to use on first read in #PlayerData.
      */
-    private final Supplier<T> defaultValueSupplier;
+    private final Function<Player, T> defaultValueCreator;
+
+    public DataDescriptor(Function<Player, T> defaultValueSupplier) {
+        this.defaultValueCreator = defaultValueSupplier;
+    }
 
     public DataDescriptor(Supplier<T> defaultValueSupplier) {
-        this.defaultValueSupplier = defaultValueSupplier;
+        this(pl -> defaultValueSupplier.get());
     }
 
     public DataDescriptor(T defaultValue) {
-        this(() -> defaultValue);
+        this(pl -> defaultValue);
     }
 
     int getInstanceId() {
         return instanceId;
     }
 
-    Supplier<T> getDefaultValueSupplier() {
-        return defaultValueSupplier;
+    Function<Player, T> getDefaultValueCreator() {
+        return defaultValueCreator;
     }
 }

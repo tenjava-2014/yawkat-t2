@@ -1,8 +1,10 @@
 package com.tenjava.entries.yawkat.t2;
 
 import com.google.common.base.Preconditions;
+import com.tenjava.entries.yawkat.t2.util.async.Async;
 import com.tenjava.entries.yawkat.t2.util.player.DataDescriptor;
 import com.tenjava.entries.yawkat.t2.util.player.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -31,7 +33,11 @@ public class Energy {
     public static synchronized void setEnergy(Player player, double energy) {
         Preconditions.checkNotNull(player, "player");
 
+        double prev = getEnergy(player);
         PlayerData.forPlayer(player).set(PLAYER_ENERGY, energy);
+        // call change event synchronously
+        Async.pipeline(new EnergyChangeEvent(player, prev))
+                .finishSync(Bukkit.getPluginManager()::callEvent);
     }
 
     /**
