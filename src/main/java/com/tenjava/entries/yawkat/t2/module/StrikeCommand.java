@@ -16,6 +16,11 @@ import org.bukkit.entity.Player;
 public class StrikeCommand extends CommandModule {
     public StrikeCommand() {
         super("strike");
+    }
+
+    @Override
+    protected void init() {
+        super.init();
         getConfig().setDefault("max_distance", 100);
         getConfig().setDefault("cost", 20D);
     }
