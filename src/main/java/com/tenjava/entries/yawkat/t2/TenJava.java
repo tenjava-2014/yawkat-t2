@@ -1,6 +1,7 @@
 package com.tenjava.entries.yawkat.t2;
 
 import com.tenjava.entries.yawkat.t2.command.Commands;
+import com.tenjava.entries.yawkat.t2.module.IronArmorEnergyConsumer;
 import com.tenjava.entries.yawkat.t2.module.Module;
 import com.tenjava.entries.yawkat.t2.module.TemperatureEnergyProducer;
 import com.tenjava.entries.yawkat.t2.module.WalkEnergyProducer;
@@ -52,6 +53,7 @@ public class TenJava extends JavaPlugin {
 
         Module.load(WalkEnergyProducer.class);
         Module.load(TemperatureEnergyProducer.class);
+        Module.load(IronArmorEnergyConsumer.class);
     }
 
     @Override
