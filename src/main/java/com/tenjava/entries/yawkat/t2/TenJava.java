@@ -2,7 +2,7 @@ package com.tenjava.entries.yawkat.t2;
 
 import com.tenjava.entries.yawkat.t2.command.Commands;
 import com.tenjava.entries.yawkat.t2.module.Module;
-import com.tenjava.entries.yawkat.t2.module.walk.WalkEnergyProducer;
+import com.tenjava.entries.yawkat.t2.module.WalkEnergyProducer;
 import com.tenjava.entries.yawkat.t2.persist.PersistedPlayerData;
 import java.util.ArrayDeque;
 import java.util.Queue;

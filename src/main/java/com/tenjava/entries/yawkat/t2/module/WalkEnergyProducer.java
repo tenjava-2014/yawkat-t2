@@ -1,4 +1,4 @@
-package com.tenjava.entries.yawkat.t2.module.walk;
+package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
 import com.tenjava.entries.yawkat.t2.module.Module;
