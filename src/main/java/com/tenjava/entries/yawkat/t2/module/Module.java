@@ -52,18 +52,23 @@ public abstract class Module implements Listener {
 
     private void init0() {
         synchronized (Module.class) {
+            // load configuration provider if it isn't loaded yet
             if (CONFIGURATION_PROVIDER == null) {
                 CONFIGURATION_PROVIDER = YamlModuleConfigurationProvider
                         .load(new File(TenJava.getInstance().getDataFolder(), "modules.yml"));
             }
         }
+        // get config from provider
         config = CONFIGURATION_PROVIDER.getConfiguration(this);
 
         getConfig().setDefault("enabled", true);
+        // if enabled = false in config, don't call #init, don't enable
         if (getConfig().get("enabled")) {
+            // only put to module map when enabled
             modules.put(getClass(), this);
             init();
         }
+        // save config in case new defaults have been added
         getConfig().save();
     }
 

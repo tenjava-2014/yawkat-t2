@@ -53,7 +53,6 @@ public class TenJava extends JavaPlugin {
         Module.load(WalkEnergyProducer.class);
         Module.load(TemperatureEnergyProducer.class);
         Module.load(IronArmorEnergyConsumer.class);
-
         Module.load(DischargeCommand.class);
         Module.load(EnergyAddCommand.class);
         Module.load(EnergyRemoveCommand.class);
