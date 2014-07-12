@@ -74,10 +74,14 @@ public class Energy {
         Preconditions.checkNotNull(failurePolicy, "failurePolicy");
 
         // check for enough energy
-        if (getEnergy(player) < removed && failurePolicy == DeductFailurePolicy.FAIL) {
+        double remaining = getEnergy(player) - removed;
+        if (remaining < 0 && failurePolicy == DeductFailurePolicy.FAIL) {
             return false;
         }
-        return Math.abs(deductEnergy(player, removed) - removed) < 0.00001;
+        if (remaining < -0.1 && failurePolicy == DeductFailurePolicy.FAIL_ROUND) {
+            return false;
+        }
+        return Math.abs(deductEnergy(player, removed) - removed) < 0.1;
     }
 
     private static double changeEnergy(Player player, double delta) {
@@ -95,6 +99,10 @@ public class Energy {
          * Return false on failure, not changing the player's energy level.
          */
         FAIL,
+        /**
+         * Like #FAIL if delta to actually removed amount is > 0.1, otherwise USE_UP.
+         */
+        FAIL_ROUND,
         /**
          * Use up the remaining energy of the player and return whether he did have any energy at all.
          */

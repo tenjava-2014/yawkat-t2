@@ -17,7 +17,7 @@ public class EnergyRemoveCommand extends EnergyChangeCommand {
 
     @Override
     protected void perform(CommandSender sender, Player target, double amount) {
-        if (Energy.deductEnergy(target, amount, Energy.DeductFailurePolicy.FAIL)) {
+        if (Energy.deductEnergy(target, amount, Energy.DeductFailurePolicy.FAIL_ROUND)) {
             sender.sendMessage(ChatColor.GOLD + "Removed " +
                                ChatColor.AQUA + Commands.toDisplayString(amount) +
                                ChatColor.GOLD + " energy from " +
