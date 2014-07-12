@@ -3,14 +3,17 @@ Manual
 
 This plugin is divided into various modules. Each has a configuration section in modules.yml.
 
+Each player has an "energy account" where their private energy is stored. They can view this account via the */energy*
+command.
+
 Battery
 -------
 
 - */battery <charge>* creates a battery with the given charge and removes that charge from the player's energy account.
 - Clicking the helmet slot of your inventory with a battery uses up the battery and charges your energy account.
 
-Batteries can also charge furnaces if the FurnaceChargeCommand module is enabled or discharge like DischargeCommand on right click
-if DischargeCommand is enabled.
+Batteries can also charge furnaces if the FurnaceChargeCommand module is enabled or discharge like DischargeCommand on
+right click if DischargeCommand is enabled.
 
 DischargeCommand
 ----------------
