@@ -1,4 +1,4 @@
-package com.tenjava.entries.yawkat.t2.command;
+package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.TenJava;
 import org.bukkit.ChatColor;
@@ -10,15 +10,6 @@ public class Commands {
     static final String ERROR_PREFIX = ChatColor.YELLOW.toString() + ChatColor.ITALIC;
 
     private Commands() {}
-
-    public static void registerCommands() {
-        TenJava.runTaskOnStartup(() -> {
-            TenJava.getInstance().getCommand("energy").setExecutor(new DisplayEnergyCommand());
-            TenJava.getInstance().getCommand("energyadd").setExecutor(new EnergyAddCommand());
-            TenJava.getInstance().getCommand("strike").setExecutor(new StrikeCommand());
-            TenJava.getInstance().getCommand("discharge").setExecutor(new DischargeCommand());
-        });
-    }
 
     /**
      * Convert a double to a nice string, omitting a trailing .0 on round numbers.

@@ -1,4 +1,4 @@
-package com.tenjava.entries.yawkat.t2.command;
+package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
 import org.bukkit.ChatColor;
@@ -12,7 +12,11 @@ import org.bukkit.entity.Player;
  *
  * @author yawkat
  */
-class DisplayEnergyCommand implements CommandExecutor {
+public class DisplayEnergyCommand extends CommandModule {
+    public DisplayEnergyCommand() {
+        super("energy");
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
         if (sender instanceof Player) {

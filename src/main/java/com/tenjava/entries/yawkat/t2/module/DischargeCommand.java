@@ -1,9 +1,7 @@
-package com.tenjava.entries.yawkat.t2.command;
+package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
-import com.tenjava.entries.yawkat.t2.module.IronArmorEnergyConsumer;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
@@ -14,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
  *
  * @author yawkat
  */
-class DischargeCommand implements CommandExecutor {
+public class DischargeCommand extends CommandModule {
     /**
      * Minimum energy required to discharge.
      */
@@ -23,6 +21,10 @@ class DischargeCommand implements CommandExecutor {
      * Range / energy; if 20 energy is spent maximum range is 10 blocks.
      */
     private static final double MAX_RANGE_PER_UNIT = 0.5;
+
+    public DischargeCommand() {
+        super("discharge");
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

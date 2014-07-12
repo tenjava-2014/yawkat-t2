@@ -1,10 +1,6 @@
 package com.tenjava.entries.yawkat.t2;
 
-import com.tenjava.entries.yawkat.t2.command.Commands;
-import com.tenjava.entries.yawkat.t2.module.IronArmorEnergyConsumer;
-import com.tenjava.entries.yawkat.t2.module.Module;
-import com.tenjava.entries.yawkat.t2.module.TemperatureEnergyProducer;
-import com.tenjava.entries.yawkat.t2.module.WalkEnergyProducer;
+import com.tenjava.entries.yawkat.t2.module.*;
 import com.tenjava.entries.yawkat.t2.persist.PersistedPlayerData;
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -46,7 +42,6 @@ public class TenJava extends JavaPlugin {
             }
         }
 
-        Commands.registerCommands();
         PersistedPlayerData.init();
 
         getServer().getPluginManager().registerEvents(new EnergyLoader(), this);
@@ -54,6 +49,11 @@ public class TenJava extends JavaPlugin {
         Module.load(WalkEnergyProducer.class);
         Module.load(TemperatureEnergyProducer.class);
         Module.load(IronArmorEnergyConsumer.class);
+
+        Module.load(DischargeCommand.class);
+        Module.load(EnergyAddCommand.class);
+        Module.load(DisplayEnergyCommand.class);
+        Module.load(StrikeCommand.class);
     }
 
     @Override

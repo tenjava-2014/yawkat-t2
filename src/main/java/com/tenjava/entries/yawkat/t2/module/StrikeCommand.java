@@ -1,10 +1,9 @@
-package com.tenjava.entries.yawkat.t2.command;
+package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,9 +11,13 @@ import org.bukkit.entity.Player;
 /**
  * @author yawkat
  */
-class StrikeCommand implements CommandExecutor {
+public class StrikeCommand extends CommandModule {
     private static final double COST = 20;
     private static final int MAX_DISTANCE = 100;
+
+    public StrikeCommand() {
+        super("strike");
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

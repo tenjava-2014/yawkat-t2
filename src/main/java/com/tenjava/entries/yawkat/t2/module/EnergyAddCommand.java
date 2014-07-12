@@ -1,10 +1,9 @@
-package com.tenjava.entries.yawkat.t2.command;
+package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,7 +12,11 @@ import org.bukkit.entity.Player;
  *
  * @author yawkat
  */
-class EnergyAddCommand implements CommandExecutor {
+public class EnergyAddCommand extends CommandModule {
+    public EnergyAddCommand() {
+        super("energyadd");
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // check for args
