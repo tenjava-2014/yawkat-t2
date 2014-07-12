@@ -34,7 +34,9 @@ public class DischargeCommand extends CommandModule {
             return true;
         }
 
-        double energy;
+        // IntelliJ made me make this variable final even though it doesn't have to be :(
+        @SuppressWarnings("UnnecessaryFinalOnLocalVariableOrParameter")
+        final double energy;
         if (args.length >= 1) {
             // amount specified
             try {
