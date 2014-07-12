@@ -5,6 +5,9 @@ import com.tenjava.entries.yawkat.t2.module.config.ModuleConfiguration;
 import com.tenjava.entries.yawkat.t2.module.config.ModuleConfigurationProvider;
 import com.tenjava.entries.yawkat.t2.module.config.YamlModuleConfigurationProvider;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -14,6 +17,11 @@ import org.bukkit.event.Listener;
  * @author yawkat
  */
 public abstract class Module implements Listener {
+    /**
+     * A map of all enabled modules.
+     */
+    private static final Map<Class<? extends Module>, Module> modules = new HashMap<>();
+
     private static ModuleConfigurationProvider CONFIGURATION_PROVIDER;
 
     private ModuleConfiguration config;
@@ -30,6 +38,18 @@ public abstract class Module implements Listener {
         }
     }
 
+    /**
+     * Get an enabled module by class or an empty optional if the module is not enabled or not loaded yet.
+     */
+    @SuppressWarnings("unchecked")
+    public static <M extends Module> Optional<M> getModule(Class<M> type) {
+        if (modules.containsKey(type)) {
+            return Optional.of((M) modules.get(type));
+        } else {
+            return Optional.empty();
+        }
+    }
+
     private void init0() {
         synchronized (Module.class) {
             if (CONFIGURATION_PROVIDER == null) {
@@ -41,6 +61,7 @@ public abstract class Module implements Listener {
 
         getConfig().setDefault("enabled", true);
         if (getConfig().get("enabled")) {
+            modules.put(getClass(), this);
             init();
         }
         getConfig().save();
