@@ -4,9 +4,14 @@ import com.tenjava.entries.yawkat.t2.TenJava;
 import org.bukkit.ChatColor;
 
 /**
+ * Command utilities.
+ *
  * @author yawkat
  */
-public class Commands {
+class Commands {
+    /**
+     * Prefix for error messages.
+     */
     static final String ERROR_PREFIX = ChatColor.YELLOW.toString() + ChatColor.ITALIC;
 
     private Commands() {}
