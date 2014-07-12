@@ -16,9 +16,8 @@ class DisplayEnergyCommand implements CommandExecutor {
         if (sender instanceof Player) {
             double energy = Energy.getEnergy((Player) sender);
             double rounded = Math.round(energy * 100) / 100D;
-            String roundedString = Commands.toDisplayString(rounded);
             sender.sendMessage(ChatColor.GOLD + "Your energy level is " +
-                               ChatColor.AQUA + roundedString +
+                               ChatColor.AQUA + Commands.toDisplayString(rounded) +
                                ChatColor.GOLD + ".");
             return true;
         }
