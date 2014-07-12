@@ -1,6 +1,7 @@
 package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
@@ -97,6 +98,11 @@ public class DischargeCommand extends CommandModule {
                                                                          1));
             }
         });
+
+        double roundEnergy = Math.round(energy * 100) / 100;
+        sender.sendMessage(ChatColor.GOLD + "Discharged " +
+                           ChatColor.AQUA + Commands.toDisplayString(roundEnergy) +
+                           ChatColor.GOLD + " energy!");
 
         return true;
     }
