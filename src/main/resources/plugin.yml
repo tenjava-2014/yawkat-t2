@@ -36,5 +36,9 @@ commands:
         permission: energy.action.strike
     discharge:
         description: Discharge either a specified amount of energy or your remaining energy. Damages and blinds nearby entities.
-        usage: /<command>
+        usage: /<command> [energy amount]
+        permission: energy.action.discharge
+    charge:
+        description: Charge a furnace with energy.
+        usage: /<command> <energy amount>
         permission: energy.action.discharge
