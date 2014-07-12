@@ -23,7 +23,7 @@ public class IronArmorEnergyConsumer extends Module {
 
     private void updateArmor() {
         Arrays.stream(Bukkit.getOnlinePlayers()).forEach(player -> {
-            long ironArmorCount = getIronArmorCount(player);
+            long ironArmorCount = getConductiveArmorCount(player);
             if (ironArmorCount > 0) {
                 double deduct = ironArmorCount * getConfig().<Double>get("armor_deduction_per_second");
                 Energy.deductEnergy(player, deduct, Energy.DeductFailurePolicy.USE_UP);
@@ -34,7 +34,7 @@ public class IronArmorEnergyConsumer extends Module {
     /**
      * Get the count of iron armor items on a player.
      */
-    public static long getIronArmorCount(HumanEntity entity) {
+    public static long getConductiveArmorCount(HumanEntity entity) {
         return Arrays.stream(entity.getInventory().getArmorContents())
                 // find armor
                 .filter(stack -> {
@@ -47,7 +47,15 @@ public class IronArmorEnergyConsumer extends Module {
                            type == Material.IRON_CHESTPLATE ||
                            type == Material.IRON_LEGGINGS ||
                            type == Material.IRON_BLOCK ||
-                           type == Material.IRON_INGOT;
+                           type == Material.IRON_INGOT ||
+                           type == Material.GOLD_BOOTS ||
+                           type == Material.GOLD_LEGGINGS ||
+                           type == Material.GOLD_CHESTPLATE ||
+                           type == Material.GOLD_HELMET ||
+                           type == Material.CHAINMAIL_BOOTS ||
+                           type == Material.CHAINMAIL_CHESTPLATE ||
+                           type == Material.CHAINMAIL_HELMET ||
+                           type == Material.CHAINMAIL_LEGGINGS;
                     // count
                 }).count();
     }

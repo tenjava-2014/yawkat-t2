@@ -98,7 +98,7 @@ public class DischargeCommand extends CommandModule {
                 // store some additional energy in that player (0-force/2 to prevent loops)
                 Energy.addEnergy((Player) entity, force / 2);
                 // -0.25 resistance for each iron armor part
-                resistance -= IronArmorEnergyConsumer.getIronArmorCount((HumanEntity) entity) * 0.25;
+                resistance -= IronArmorEnergyConsumer.getConductiveArmorCount((HumanEntity) entity) * 0.25;
             }
             if (entity instanceof Damageable) {
                 // apply damage (0-energy half hearts), shrinks with range
