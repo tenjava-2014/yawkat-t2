@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.util.Vector;
 
 /**
  * Module that produces a small amount of energy when a player travels.
@@ -30,7 +31,10 @@ public class WalkEnergyProducer extends Module {
             // we can't reliably handle different worlds
             return;
         }
-        double dist = from.distance(to);
+        // direction vector we walked along
+        Vector off = from.toVector().subtract(to.toVector());
+        // horizontal distance
+        double dist = Math.sqrt(off.getX() * off.getX() + off.getZ() * off.getZ());
         double gain = dist * DISTANCE_ENERGY_MULTIPLIER;
         // increase the players energy level
         Energy.addEnergy(event.getPlayer(), gain);
