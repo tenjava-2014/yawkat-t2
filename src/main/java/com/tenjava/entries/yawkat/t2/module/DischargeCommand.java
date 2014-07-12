@@ -14,17 +14,17 @@ import org.bukkit.potion.PotionEffectType;
  * @author yawkat
  */
 public class DischargeCommand extends CommandModule {
-    /**
-     * Minimum energy required to discharge.
-     */
-    private static final double MIN_ENERGY = 1;
-    /**
-     * Range / energy; if 20 energy is spent maximum range is 10 blocks.
-     */
-    private static final double MAX_RANGE_PER_UNIT = 0.5;
-
     public DischargeCommand() {
         super("discharge");
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        // Range / energy; if 20 energy is spent maximum range is 10 blocks
+        getConfig().setDefault("max_range_per_unit", 0.5);
+        // Minimum energy required to discharge
+        getConfig().setDefault("min_energy", 1D);
     }
 
     @Override
@@ -57,9 +57,9 @@ public class DischargeCommand extends CommandModule {
         }
 
         // check for minimum
-        if (energy < MIN_ENERGY) {
+        if (energy < getConfig().<Double>get("min_energy")) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Minimum energy is " +
-                               Commands.toDisplayString(MIN_ENERGY) + "!");
+                               Commands.toDisplayString(getConfig().get("min_energy")) + "!");
             return true;
         }
 
@@ -70,7 +70,7 @@ public class DischargeCommand extends CommandModule {
         }
 
         // range of the discharge
-        double range = energy * MAX_RANGE_PER_UNIT;
+        double range = energy * getConfig().<Double>get("max_range_per_unit");
         ((Entity) sender).getNearbyEntities(range, range, range).forEach(entity -> {
             double distance = entity.getLocation().distance(((Entity) sender).getLocation());
             // force of the electric shock (0-energy)
