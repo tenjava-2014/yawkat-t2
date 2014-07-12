@@ -5,6 +5,9 @@ permissions:
     energy.display.self:
         description: Allows displaying own energy level.
         default: true
+    energy.display.other:
+        description: Allows displaying other players' energy level.
+        default: op
     energy.add:
         description: Allows adding energy to players.
         default: op
@@ -26,8 +29,7 @@ permissions:
 commands:
     energy:
         description: Display your current energy level.
-        usage: /<command>
-        permission: energy.display.self
+        usage: /<command> [player]
     energyadd:
         description: Add energy to a player.
         usage: /<command> <player> <amount>

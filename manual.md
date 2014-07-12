@@ -22,7 +22,7 @@ effects but does still allow you to charge your energy account through other pla
 DisplayEnergyCommand
 --------------------
 
-*/energy* displays the energy currently in your account.
+*/energy [username]* displays the energy currently in your or someone else's account.
 
 EnergyAddCommand / EnergyRemoveCommand
 --------------------------------------
