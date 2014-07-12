@@ -78,6 +78,10 @@ public class DischargeCommand extends CommandModule {
 
     private void discharge(Player on, double energy) {// range of the discharge
         double range = energy * getConfig().<Double>get("max_range_per_unit");
+
+        // lightning effect
+        on.getLocation().getWorld().strikeLightningEffect(on.getLocation());
+
         on.getNearbyEntities(range, range, range).forEach(entity -> {
             double distance = entity.getLocation().distance(on.getLocation());
             // force of the electric shock (0-energy)
