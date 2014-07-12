@@ -9,14 +9,15 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 /**
+ * Casts a lightning strike at the place the player is looking at.
+ *
  * @author yawkat
  */
 public class StrikeCommand extends CommandModule {
-    private static final double COST = 20;
-    private static final int MAX_DISTANCE = 100;
-
     public StrikeCommand() {
         super("strike");
+        getConfig().setDefault("max_distance", 100);
+        getConfig().setDefault("cost", 20D);
     }
 
     @Override
@@ -26,22 +27,25 @@ public class StrikeCommand extends CommandModule {
             return true;
         }
 
-        Block target = ((LivingEntity) sender).getTargetBlock(null, MAX_DISTANCE);
+        // get target
+        Block target = ((LivingEntity) sender).getTargetBlock(null, getConfig().get("max_distance"));
         if (target == null) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Target is out of reach!");
             return true;
         }
 
-        if (!Energy.deductEnergy((Player) sender, COST, Energy.DeductFailurePolicy.FAIL)) {
-            sender.sendMessage(Commands.ERROR_PREFIX + "You need at least " + Commands.toDisplayString(COST) +
-                               " energy to do that!");
+        // remove energy
+        if (!Energy.deductEnergy((Player) sender, getConfig().get("cost"), Energy.DeductFailurePolicy.FAIL)) {
+            sender.sendMessage(Commands.ERROR_PREFIX + "You need at least " +
+                               Commands.toDisplayString(getConfig().get("cost")) + " energy to do that!");
             return true;
         }
 
+        // cast
         target.getWorld().strikeLightning(target.getLocation());
 
         sender.sendMessage(ChatColor.GOLD + "Lightning cast for " +
-                           ChatColor.AQUA + Commands.toDisplayString(COST) +
+                           ChatColor.AQUA + Commands.toDisplayString(getConfig().get("cost")) +
                            ChatColor.GOLD + " energy.");
 
         return true;
