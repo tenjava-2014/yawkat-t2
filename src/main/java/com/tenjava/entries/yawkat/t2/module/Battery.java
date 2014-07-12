@@ -76,7 +76,7 @@ public class Battery extends CommandModule {
     /**
      * Returns whether a stack is a valid battery.
      */
-    private boolean isBattery(ItemStack stack) {
+    public boolean isBattery(ItemStack stack) {
         // air
         if (stack == null) {
             return false;
@@ -95,7 +95,7 @@ public class Battery extends CommandModule {
     /**
      * Get the charge of a battery stack.
      */
-    private double getCharge(ItemStack stack) {
+    public double getCharge(ItemStack stack) {
         // wow this is hacky
         Matcher m = DOUBLE.matcher(stack.getItemMeta().getDisplayName());
         if (!m.find()) {

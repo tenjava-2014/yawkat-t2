@@ -9,6 +9,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.FurnaceInventory;
 
 /**
  * @author yawkat
@@ -68,5 +72,24 @@ public class FurnaceChargeCommand extends CommandModule {
         sender.sendMessage(ChatColor.GOLD + "Furnace charged!");
 
         return true;
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        Module.getModule(Battery.class).ifPresent(battery -> {
+            if (event.getInventory().getType() == InventoryType.FURNACE) {
+                if (battery.isBattery(event.getCursor())) {
+                    double charge = battery.getCharge(event.getCursor());
+                    event.setCancelled(true);
+                    event.setCursor(null);
+                    if (event.getWhoClicked() instanceof Player) {
+                        ((Player) event.getWhoClicked()).updateInventory();
+                    }
+                    Furnace holder = ((FurnaceInventory) event.getInventory()).getHolder();
+                    holder.setBurnTime((short) (holder.getBurnTime() +
+                                                charge * getConfig().<Double>get("burn_per_energy")));
+                }
+            }
+        });
     }
 }
