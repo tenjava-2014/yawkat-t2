@@ -1,6 +1,7 @@
 package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +11,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
@@ -59,6 +62,14 @@ public class Battery extends CommandModule {
             player.sendMessage(ChatColor.GOLD + "Added " +
                                ChatColor.AQUA + Commands.toDisplayString(Math.round(charge * 100) / 100D) +
                                ChatColor.GOLD + " energy.");
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onCraft(CraftItemEvent event) {
+        // disallow crafting with batteries
+        if (Arrays.stream(event.getInventory().getMatrix()).filter(this::isBattery).findAny().isPresent()) {
+            event.setCancelled(true);
         }
     }
 
