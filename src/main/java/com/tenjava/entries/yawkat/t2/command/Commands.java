@@ -15,6 +15,7 @@ public class Commands {
         TenJava.runTaskOnStartup(() -> {
             TenJava.getInstance().getCommand("energy").setExecutor(new DisplayEnergyCommand());
             TenJava.getInstance().getCommand("energyadd").setExecutor(new EnergyAddCommand());
+            TenJava.getInstance().getCommand("strike").setExecutor(new StrikeCommand());
         });
     }
 

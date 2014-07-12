@@ -8,6 +8,9 @@ permissions:
     energy.add:
         description: Allows adding energy to players.
         default: op
+    energy.action.strike:
+        description: Allows using the /strike command to cast a lightning strike.
+        default: true
 commands:
     energy:
         description: Display your current energy level.
@@ -17,3 +20,7 @@ commands:
         description: Display your current energy level.
         usage: /<command> <player> <amount>
         permission: energy.add
+    strike:
+        description: Cast a lightning strike at the block you're looking at, costing 20 energy.
+        usage: /<command>
+        permission: energy.action.strike
