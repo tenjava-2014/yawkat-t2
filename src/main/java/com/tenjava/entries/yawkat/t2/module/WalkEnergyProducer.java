@@ -1,7 +1,6 @@
 package com.tenjava.entries.yawkat.t2.module;
 
 import com.tenjava.entries.yawkat.t2.Energy;
-import com.tenjava.entries.yawkat.t2.module.Module;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -24,6 +23,13 @@ public class WalkEnergyProducer extends Module {
      */
     private static final double EARN_LIMIT = 15;
 
+    @Override
+    protected void init() {
+        super.init();
+        getConfig().setDefault("distance_energy_modifier", 0.01);
+        getConfig().setDefault("earn_limit", 15D);
+    }
+
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         if (event instanceof PlayerTeleportEvent) {
@@ -40,10 +46,10 @@ public class WalkEnergyProducer extends Module {
         Vector off = from.toVector().subtract(to.toVector());
         // horizontal distance
         double dist = Math.sqrt(off.getX() * off.getX() + off.getZ() * off.getZ());
-        double gain = dist * DISTANCE_ENERGY_MULTIPLIER;
+        double gain = dist * getConfig().<Double>get("distance_energy_modifier");
         double prevEnergy = Energy.getEnergy(event.getPlayer());
         // how far the limit is away
-        double remainingEnergyUntilLimit = EARN_LIMIT - prevEnergy;
+        double remainingEnergyUntilLimit = getConfig().<Double>get("earn_limit") - prevEnergy;
         if (remainingEnergyUntilLimit < 0) {
             // reached limit, don't earn more
             return;
