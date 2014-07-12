@@ -31,5 +31,10 @@ Usage
 1. Install plugin
 2. Do things with it
 
-<!-- Hi, yawkat! This is the default README for every ten.java submission. -->
-<!-- We encourage you to edit this README with some information about your submission – keep in mind you'll be scored on documentation! -->
+---------------------------------------
+
+About
+-----
+
+This plugin adds an energy system where players can earn and work with energy in various ways. The features are
+described in `manual.md`.
