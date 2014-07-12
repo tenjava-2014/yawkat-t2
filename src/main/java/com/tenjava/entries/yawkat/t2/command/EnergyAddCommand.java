@@ -24,6 +24,7 @@ class EnergyAddCommand implements CommandExecutor {
 
         // get the target player
         String targetName = args[0];
+        @SuppressWarnings("deprecation")
         Player target = Bukkit.getPlayer(targetName);
         // not online
         if (target == null) {
