@@ -5,8 +5,15 @@ permissions:
     power.display.self:
         description: Allows displaying own power level.
         default: true
+    power.add:
+        description: Allows adding power to players.
+        default: op
 commands:
     power:
         description: Display your current power level.
         usage: /<command>
         permission: power.display.self
+    poweradd:
+        description: Display your current power level.
+        usage: /<command> <player> <amount>
+        permission: power.add
