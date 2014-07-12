@@ -44,5 +44,11 @@ public class TenJava extends JavaPlugin {
 
         Commands.registerCommands();
         PersistedPlayerData.init();
+
+    }
+
+    @Override
+    public void onDisable() {
+        instance = null;
     }
 }
