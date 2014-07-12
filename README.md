@@ -19,7 +19,7 @@ Compilation
 
 - Download & Install [Maven 3](http://maven.apache.org/download.html)
 - Clone the repository: `git clone https://github.com/tenjava/yawkat-t2`
-- Compile and create the plugin package using Maven: `mvn`
+- Compile and create the plugin package using Maven: `mvn clean package`
 
 Maven will download all required dependencies and build a ready-for-use plugin package!
 
