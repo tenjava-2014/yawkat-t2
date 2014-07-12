@@ -64,15 +64,12 @@ public class Battery extends CommandModule {
 
     private boolean isBattery(ItemStack stack) {
         if (stack == null) {
-            System.out.println("Null");
             return false;
         }
         if (!stack.getType().toString().equalsIgnoreCase(getConfig().get("material"))) {
-            System.out.println("Mat");
             return false;
         }
         if (getCharge(stack) == 0) {
-            System.out.println("charge");
             return false;
         }
         return true;
