@@ -62,13 +62,19 @@ public class Battery extends CommandModule {
         }
     }
 
+    /**
+     * Returns whether a stack is a valid battery.
+     */
     private boolean isBattery(ItemStack stack) {
+        // air
         if (stack == null) {
             return false;
         }
+        // type
         if (!stack.getType().toString().equalsIgnoreCase(getConfig().get("material"))) {
             return false;
         }
+        // charge = 0 => normal item
         if (getCharge(stack) == 0) {
             return false;
         }
@@ -84,9 +90,12 @@ public class Battery extends CommandModule {
         if (!m.find()) {
             return 0;
         }
-        return Double.parseDouble(m.group());
+        return Double.parseDouble(m.group()) * stack.getAmount();
     }
 
+    /**
+     * Create a battery of the given charge. Returns an empty optional if the charge is too low.
+     */
     private Optional<ItemStack> createBattery(double charge) {
         ItemStack stack = new ItemStack(Material.getMaterial(getConfig().<String>get("material")));
         ItemMeta meta = stack.getItemMeta();
@@ -99,7 +108,7 @@ public class Battery extends CommandModule {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Commands.ERROR_PREFIX + "Only players can charge furnaces.");
+            sender.sendMessage(Commands.ERROR_PREFIX + "Only players can create batteries.");
             return true;
         }
         if (args.length != 1) {
