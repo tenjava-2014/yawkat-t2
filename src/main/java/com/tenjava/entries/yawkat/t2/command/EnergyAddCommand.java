@@ -15,7 +15,7 @@ class EnergyAddCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length != 2) {
-            sender.sendMessage(Commands.ERROR_PREFIX + "Usage: /" + command.getAliases().get(0) + " <name> <amount>");
+            sender.sendMessage(Commands.ERROR_PREFIX + "Usage: /" + command.getName() + " <name> <amount>");
             return false;
         }
 
