@@ -22,8 +22,14 @@ public abstract class Module implements Listener {
      */
     private static final Map<Class<? extends Module>, Module> modules = new HashMap<>();
 
+    /**
+     * Global configuration provider.
+     */
     private static ModuleConfigurationProvider CONFIGURATION_PROVIDER;
 
+    /**
+     * Module config for this module.
+     */
     private ModuleConfiguration config;
 
     /**
