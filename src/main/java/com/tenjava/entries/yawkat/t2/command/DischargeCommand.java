@@ -1,13 +1,12 @@
 package com.tenjava.entries.yawkat.t2.command;
 
 import com.tenjava.entries.yawkat.t2.Energy;
+import java.util.Arrays;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -77,19 +76,37 @@ class DischargeCommand implements CommandExecutor {
                 return;
             }
 
+            // resistance from negative effects (damage, blindness)
+            // 1 = no resistance 0 = full resistance (no damage)
+            double resistance = 1;
+            if (entity instanceof Player) {
+                // store some additional energy in that player (0-force/2 to prevent loops)
+                Energy.addEnergy((Player) entity, force / 2);
+                // -0.25 resistance for each iron armor part
+                resistance -= Arrays.stream(((HumanEntity) entity).getInventory().getArmorContents())
+                        // find armor
+                                      .filter(stack -> {
+                    if (stack == null) {
+                        return false;
+                    }
+                    Material type = stack.getType();
+                    return type == Material.IRON_BOOTS ||
+                           type == Material.IRON_HELMET ||
+                           type == Material.IRON_CHESTPLATE ||
+                           type == Material.IRON_LEGGINGS ||
+                           type == Material.IRON_BLOCK ||
+                           type == Material.IRON_INGOT;
+                }).count() * 0.25;
+            }
             if (entity instanceof Damageable) {
                 // apply damage (0-energy half hearts), shrinks with range
-                ((Damageable) entity).damage(force, (Entity) sender);
+                ((Damageable) entity).damage(force * resistance, (Entity) sender);
             }
             if (entity instanceof LivingEntity) {
                 // apply blindness (0-energy seconds), shrinks with range
                 ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,
-                                                                         (int) force * 20,
+                                                                         (int) (force * resistance * 20),
                                                                          1));
-            }
-            if (entity instanceof Player) {
-                // store some additional energy in that player (0-force/2 to prevent loops)
-                Energy.addEnergy((Player) entity, force / 2);
             }
         });
 
