@@ -1,5 +1,6 @@
 package com.tenjava.entries.yawkat.t2;
 
+import com.tenjava.entries.yawkat.t2.command.Commands;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,5 +40,7 @@ public class TenJava extends JavaPlugin {
                 runTaskOnStartup(startupTaskQueue.poll());
             }
         }
+
+        Commands.registerCommands();
     }
 }

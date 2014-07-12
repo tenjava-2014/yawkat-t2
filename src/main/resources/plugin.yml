@@ -1,3 +1,12 @@
 name: yawkat-t2
 main: com.tenjava.entries.yawkat.t2.TenJava
 version: '${project.version}'
+permissions:
+    power.display.self:
+        description: Allows displaying own power level.
+        default: true
+commands:
+    power:
+        description: Display your current power level.
+        usage: /<command>
+        permission: power.display.self
