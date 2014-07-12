@@ -10,6 +10,8 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
+ * Listener that preloads data on login and saves it on logout.
+ *
  * @author yawkat
  */
 class PersistedPlayerDataListener implements Listener {
