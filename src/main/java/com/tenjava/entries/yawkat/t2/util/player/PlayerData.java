@@ -1,6 +1,7 @@
 package com.tenjava.entries.yawkat.t2.util.player;
 
 import com.google.common.base.Preconditions;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,18 +25,25 @@ public class PlayerData {
     private static final Map<Player, PlayerData> DATA_MAP = new WeakHashMap<>();
 
     /**
+     * Our player. Must be a WeakReference because otherwise our DATA_MAP would be useless as a WeakHashMap but can be
+     * assumed to always be a valid reference.
+     */
+    private final WeakReference<Player> player;
+    /**
      * The cells we store data in. The index of a DataDescriptor in this list is their DataDescriptor#instanceId.
      */
     private final List<Object> cells = new ArrayList<>();
 
-    private PlayerData() {}
+    private PlayerData(Player player) {
+        this.player = new WeakReference<>(player);
+    }
 
     /**
      * Get the PlayerData instance for a given player.
      */
     public static synchronized PlayerData forPlayer(Player player) {
         // check if we already have an entry for that player, otherwise create one.
-        return DATA_MAP.computeIfAbsent(player, pl -> new PlayerData());
+        return DATA_MAP.computeIfAbsent(player, PlayerData::new);
     }
 
     /**
@@ -57,7 +65,8 @@ public class PlayerData {
         Object v = cells.get(descriptor.getInstanceId());
         // create default if necessary
         if (v == null) {
-            v = descriptor.getDefaultValueSupplier().get();
+            // If they're offline this PlayerData shouldn't exist anyway because of the WeakHashMap
+            v = descriptor.getDefaultValueCreator().apply(player.get());
             if (v == null) {
                 throw new NullPointerException("Invalid default value for descriptor: null");
             }

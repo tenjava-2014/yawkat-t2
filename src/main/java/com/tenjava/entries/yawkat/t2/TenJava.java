@@ -1,6 +1,7 @@
 package com.tenjava.entries.yawkat.t2;
 
 import com.tenjava.entries.yawkat.t2.command.Commands;
+import com.tenjava.entries.yawkat.t2.persist.PersistedPlayerData;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,5 +43,6 @@ public class TenJava extends JavaPlugin {
         }
 
         Commands.registerCommands();
+        PersistedPlayerData.init();
     }
 }
