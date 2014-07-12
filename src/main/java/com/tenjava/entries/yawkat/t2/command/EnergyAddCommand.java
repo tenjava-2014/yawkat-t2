@@ -19,7 +19,7 @@ class EnergyAddCommand implements CommandExecutor {
         // check for args
         if (args.length != 2) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Usage: /" + command.getName() + " <name> <amount>");
-            return false;
+            return true;
         }
 
         // get the target player
@@ -28,7 +28,7 @@ class EnergyAddCommand implements CommandExecutor {
         // not online
         if (target == null) {
             sender.sendMessage(Commands.ERROR_PREFIX + "No such player.");
-            return false;
+            return true;
         }
         // get the amount
         double amount;
@@ -37,13 +37,13 @@ class EnergyAddCommand implements CommandExecutor {
         } catch (NumberFormatException e) {
             // invalid
             sender.sendMessage(Commands.ERROR_PREFIX + "Invalid amount.");
-            return false;
+            return true;
         }
 
         // check for negative amount, NaN or +-INF (does parseDouble return those?)
         if (amount < 0 || !Double.isFinite(amount)) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Amount must be positive.");
-            return false;
+            return true;
         }
 
         // perform
