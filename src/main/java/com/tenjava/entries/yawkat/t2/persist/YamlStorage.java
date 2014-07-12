@@ -61,6 +61,10 @@ class YamlStorage implements PersistentStorage {
     }
 
     private ConfigurationSection getPlayerStore(UUID player) {
-        return configuration.getConfigurationSection(player.toString());
+        ConfigurationSection section = configuration.getConfigurationSection(player.toString());
+        if (section == null) {
+            section = configuration.createSection(player.toString());
+        }
+        return section;
     }
 }
