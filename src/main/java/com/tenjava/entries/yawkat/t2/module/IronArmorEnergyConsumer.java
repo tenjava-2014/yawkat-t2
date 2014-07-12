@@ -13,14 +13,11 @@ import org.bukkit.entity.HumanEntity;
  * @author yawkat
  */
 public class IronArmorEnergyConsumer extends Module {
-    /**
-     * How much energy should be deducted from the player per second and iron armor item
-     */
-    private static final double ARMOR_DEDUCTION_PER_SECOND = 0.02;
-
     @Override
     protected void init() {
         super.init();
+        // How much energy should be deducted from the player per second and iron armor item
+        getConfig().setDefault("armor_deduction_per_second", 0.002);
         Bukkit.getScheduler().runTaskTimer(TenJava.getInstance(), this::updateArmor, 20, 20);
     }
 
@@ -28,7 +25,7 @@ public class IronArmorEnergyConsumer extends Module {
         Arrays.stream(Bukkit.getOnlinePlayers()).forEach(player -> {
             long ironArmorCount = getIronArmorCount(player);
             if (ironArmorCount > 0) {
-                double deduct = ironArmorCount * ARMOR_DEDUCTION_PER_SECOND;
+                double deduct = ironArmorCount * getConfig().<Double>get("armor_deduction_per_second");
                 Energy.deductEnergy(player, deduct, Energy.DeductFailurePolicy.USE_UP);
             }
         });
