@@ -13,20 +13,12 @@ import org.bukkit.util.Vector;
  * @author yawkat
  */
 public class WalkEnergyProducer extends Module {
-    /**
-     * How much energy is earned from walking one block
-     */
-    private static final double DISTANCE_ENERGY_MULTIPLIER = 0.01;
-
-    /**
-     * Maximum energy level we can reach by walking. Energy gain will decline when getting close to this limit.
-     */
-    private static final double EARN_LIMIT = 15;
-
     @Override
     protected void init() {
         super.init();
+        // How much energy is earned from walking one block
         getConfig().setDefault("distance_energy_modifier", 0.01);
+        // Maximum energy level we can reach by walking. Energy gain will decline when getting close to this limit.
         getConfig().setDefault("earn_limit", 15D);
     }
 
@@ -55,7 +47,7 @@ public class WalkEnergyProducer extends Module {
             return;
         }
         // less gain when close to limit
-        gain *= remainingEnergyUntilLimit / EARN_LIMIT;
+        gain *= remainingEnergyUntilLimit / getConfig().<Double>get("earn_limit");
         // increase the players energy level
         Energy.addEnergy(event.getPlayer(), gain);
     }
