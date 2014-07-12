@@ -97,6 +97,7 @@ public class Battery extends CommandModule {
      */
     public double getCharge(ItemStack stack) {
         // wow this is hacky
+        // find any number in the display string and return it if there is one
         Matcher m = DOUBLE.matcher(stack.getItemMeta().getDisplayName());
         if (!m.find()) {
             return 0;
@@ -109,6 +110,7 @@ public class Battery extends CommandModule {
      */
     private Optional<ItemStack> createBattery(double charge) {
         ItemStack stack = new ItemStack(Material.getMaterial(getConfig().<String>get("material")));
+        // set name according to config
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(String.format(getConfig().get("name"), charge));
         stack.setItemMeta(meta);
@@ -127,6 +129,7 @@ public class Battery extends CommandModule {
             return true;
         }
 
+        // parse charge amount
         double energy;
         try {
             energy = Double.parseDouble(args[0]);
@@ -142,18 +145,22 @@ public class Battery extends CommandModule {
             return true;
         }
 
+        // create item
         Optional<ItemStack> stack = createBattery(energy);
 
+        // not enough energy to create battery item
         if (!stack.isPresent()) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Charge too small!");
             return false;
         }
 
+        // remove energy
         if (!Energy.deductEnergy((Player) sender, energy, Energy.DeductFailurePolicy.FAIL)) {
             sender.sendMessage(Commands.ERROR_PREFIX + "Not enough energy!");
             return true;
         }
 
+        // add battery to inventory
         ((InventoryHolder) sender).getInventory().addItem(stack.get());
 
         sender.sendMessage(ChatColor.GOLD + "Battery created!");
