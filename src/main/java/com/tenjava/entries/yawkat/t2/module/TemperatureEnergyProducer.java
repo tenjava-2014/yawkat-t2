@@ -27,31 +27,20 @@ public class TemperatureEnergyProducer extends Module {
      */
     private static final DataDescriptor<Integer> LAST_HEAT_UPDATE = new DataDescriptor<>(0);
 
-    /**
-     * How far we should scan for firey blocks
-     */
-    private static final int BLOCK_SCAN_RADIUS = 5;
-
-    /**
-     * How much the light level should contribute to the heat value.
-     */
-    private static final double LIGHT_LEVEL_MULTIPLIER = 0.02;
-    /**
-     * How much the biome temperature should contribute to the heat value.
-     */
-    private static final double BIOME_TEMP_MULTIPLIER = 0.01;
-    /**
-     * How much the block-based temperature (lava, fire) should contribute to the heat value.
-     */
-    private static final double BLOCK_TEMP_MULTIPLIER = 0.1;
-    /**
-     * Multiplier for energy gained through heat.
-     */
-    private static final double ENERGY_GAIN_MULTIPLIER = 0.5;
-
     @Override
     protected void init() {
         super.init();
+        // How far we should scan for fire-y blocks
+        getConfig().setDefault("block_scan_radius", 5);
+        // How much the light level should contribute to the heat value.
+        getConfig().setDefault("light_level_multiplier", 0.02);
+        // How much the biome temperature should contribute to the heat value.
+        getConfig().setDefault("biome_temp_multiplier", 0.01);
+        // How much the block-based temperature (lava, fire) should contribute to the heat value.
+        getConfig().setDefault("block_temp_multiplier", 0.1);
+        // Multiplier for energy gained through heat.
+        getConfig().setDefault("energy_gain_multiplier", 0.5);
+
         Bukkit.getScheduler().runTaskTimer(TenJava.getInstance(), this::updateHeat, 1, 1);
     }
 
@@ -64,9 +53,10 @@ public class TemperatureEnergyProducer extends Module {
         double biomeTemperature = block.getTemperature();
         // distance-weighted count of nearby hot blocks
         double hotBlocksInVicinityWeighted = 0;
-        for (int x = -BLOCK_SCAN_RADIUS; x <= BLOCK_SCAN_RADIUS; x++) {
-            for (int y = -BLOCK_SCAN_RADIUS; y <= BLOCK_SCAN_RADIUS; y++) {
-                for (int z = -BLOCK_SCAN_RADIUS; z <= BLOCK_SCAN_RADIUS; z++) {
+        int blockScanRadius = getConfig().get("block_scan_radius");
+        for (int x = -blockScanRadius; x <= blockScanRadius; x++) {
+            for (int y = -blockScanRadius; y <= blockScanRadius; y++) {
+                for (int z = -blockScanRadius; z <= blockScanRadius; z++) {
                     Block there = block.getRelative(x, y, z);
                     Material type = there.getType();
                     if (type == Material.LAVA || type == Material.STATIONARY_LAVA || type == Material.FIRE) {
@@ -74,7 +64,7 @@ public class TemperatureEnergyProducer extends Module {
                         // the correct distance
                         double dist = there.getLocation().add(0.5, 1.5, 0.5).distance(player.getLocation());
                         // weight is radius / distance because that worked well
-                        hotBlocksInVicinityWeighted += 1 / dist / BLOCK_SCAN_RADIUS;
+                        hotBlocksInVicinityWeighted += 1 / dist / blockScanRadius;
                     }
                 }
             }
@@ -83,9 +73,9 @@ public class TemperatureEnergyProducer extends Module {
         // calculate total heat
         double heat = 0;
         // ll is 1-15 so divide it by that
-        heat += lightLevel / 15D * LIGHT_LEVEL_MULTIPLIER;
-        heat += biomeTemperature * BIOME_TEMP_MULTIPLIER;
-        heat += hotBlocksInVicinityWeighted * BLOCK_TEMP_MULTIPLIER;
+        heat += lightLevel / 15D * getConfig().<Double>get("light_level_multiplier");
+        heat += biomeTemperature * getConfig().<Double>get("biome_temp_multiplier");
+        heat += hotBlocksInVicinityWeighted * getConfig().<Double>get("block_temp_multiplier");
         return heat;
     }
 
@@ -97,7 +87,7 @@ public class TemperatureEnergyProducer extends Module {
         // heat difference
         double heatOff = Math.abs(heatPrev - heatNow);
         // how much energy was gained from that
-        double energyGain = heatOff * ENERGY_GAIN_MULTIPLIER;
+        double energyGain = heatOff * getConfig().<Double>get("energy_gain_multiplier");
         Energy.addEnergy(player, energyGain);
         // save heat for next update
         PlayerData.forPlayer(player).set(HEAT, OptionalDouble.of(heatNow));
