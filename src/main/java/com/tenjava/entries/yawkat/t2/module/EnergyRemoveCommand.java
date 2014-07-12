@@ -25,7 +25,7 @@ public class EnergyRemoveCommand extends EnergyChangeCommand {
                                ChatColor.GOLD + ".");
         } else {
             double only = Energy.getEnergy(target);
-            only = Math.round(only/ 100) * 100;
+            only = Math.round(only * 100) / 100;
             sender.sendMessage(Commands.ERROR_PREFIX + target.getName() + " only has " +
                                Commands.toDisplayString(only) + " energy.");
         }
