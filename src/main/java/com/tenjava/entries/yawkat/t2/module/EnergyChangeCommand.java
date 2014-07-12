@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Abstract class for EnergyAdd- and EnergyRemoveCommand that does the primary validation for them.
+ *
  * @author yawkat
  */
 abstract class EnergyChangeCommand extends CommandModule {
