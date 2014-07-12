@@ -1,6 +1,6 @@
 package com.tenjava.entries.yawkat.t2.command;
 
-import com.tenjava.entries.yawkat.t2.Power;
+import com.tenjava.entries.yawkat.t2.Energy;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,14 +10,14 @@ import org.bukkit.entity.Player;
 /**
  * @author yawkat
  */
-class DisplayPowerCommand implements CommandExecutor {
+class DisplayEnergyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
         if (sender instanceof Player) {
-            double power = Power.getPower((Player) sender);
-            double rounded = Math.round(power * 100) / 100D;
+            double energy = Energy.getEnergy((Player) sender);
+            double rounded = Math.round(energy * 100) / 100D;
             String roundedString = Commands.toDisplayString(rounded);
-            sender.sendMessage(ChatColor.GOLD + "Your power level is " +
+            sender.sendMessage(ChatColor.GOLD + "Your energy level is " +
                                ChatColor.AQUA + roundedString +
                                ChatColor.GOLD + ".");
             return true;

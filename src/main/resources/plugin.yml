@@ -2,18 +2,18 @@ name: yawkat-t2
 main: com.tenjava.entries.yawkat.t2.TenJava
 version: '${project.version}'
 permissions:
-    power.display.self:
-        description: Allows displaying own power level.
+    energy.display.self:
+        description: Allows displaying own energy level.
         default: true
-    power.add:
-        description: Allows adding power to players.
+    energy.add:
+        description: Allows adding energy to players.
         default: op
 commands:
-    power:
-        description: Display your current power level.
+    energy:
+        description: Display your current energy level.
         usage: /<command>
-        permission: power.display.self
-    poweradd:
-        description: Display your current power level.
+        permission: energy.display.self
+    energyadd:
+        description: Display your current energy level.
         usage: /<command> <player> <amount>
-        permission: power.add
+        permission: energy.add

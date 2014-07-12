@@ -1,6 +1,6 @@
 package com.tenjava.entries.yawkat.t2.command;
 
-import com.tenjava.entries.yawkat.t2.Power;
+import com.tenjava.entries.yawkat.t2.Energy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * @author yawkat
  */
-class PowerAddCommand implements CommandExecutor {
+class EnergyAddCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length != 2) {
@@ -38,10 +38,10 @@ class PowerAddCommand implements CommandExecutor {
             return false;
         }
 
-        Power.addPower(target, amount);
+        Energy.addEnergy(target, amount);
         sender.sendMessage(ChatColor.GOLD + "Added " +
                            ChatColor.AQUA + Commands.toDisplayString(amount) +
-                           ChatColor.GOLD + " power for " +
+                           ChatColor.GOLD + " energy for " +
                            ChatColor.AQUA + target.getName() +
                            ChatColor.GOLD + ".");
 

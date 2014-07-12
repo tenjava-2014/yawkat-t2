@@ -13,8 +13,8 @@ public class Commands {
 
     public static void registerCommands() {
         TenJava.runTaskOnStartup(() -> {
-            TenJava.getInstance().getCommand("power").setExecutor(new DisplayPowerCommand());
-            TenJava.getInstance().getCommand("poweradd").setExecutor(new PowerAddCommand());
+            TenJava.getInstance().getCommand("energy").setExecutor(new DisplayEnergyCommand());
+            TenJava.getInstance().getCommand("energyadd").setExecutor(new EnergyAddCommand());
         });
     }
 
