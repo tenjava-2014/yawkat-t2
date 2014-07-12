@@ -40,7 +40,7 @@ class PowerAddCommand implements CommandExecutor {
 
         Power.addPower(target, amount);
         sender.sendMessage(ChatColor.GOLD + "Added " +
-                           ChatColor.AQUA + amount +
+                           ChatColor.AQUA + Commands.toDisplayString(amount) +
                            ChatColor.GOLD + " power for " +
                            ChatColor.AQUA + target.getName() +
                            ChatColor.GOLD + ".");

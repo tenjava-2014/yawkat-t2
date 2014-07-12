@@ -16,13 +16,7 @@ class DisplayPowerCommand implements CommandExecutor {
         if (sender instanceof Player) {
             double power = Power.getPower((Player) sender);
             double rounded = Math.round(power * 100) / 100D;
-            String roundedString;
-            if ((int) rounded == rounded) {
-                // if this is a round number don't print the trailing .0
-                roundedString = String.valueOf((int) rounded);
-            } else {
-                roundedString = String.valueOf(rounded);
-            }
+            String roundedString = Commands.toDisplayString(rounded);
             sender.sendMessage(ChatColor.GOLD + "Your power level is " +
                                ChatColor.AQUA + roundedString +
                                ChatColor.GOLD + ".");
