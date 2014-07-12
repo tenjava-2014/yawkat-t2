@@ -16,6 +16,7 @@ public class Commands {
             TenJava.getInstance().getCommand("energy").setExecutor(new DisplayEnergyCommand());
             TenJava.getInstance().getCommand("energyadd").setExecutor(new EnergyAddCommand());
             TenJava.getInstance().getCommand("strike").setExecutor(new StrikeCommand());
+            TenJava.getInstance().getCommand("discharge").setExecutor(new DischargeCommand());
         });
     }
 
