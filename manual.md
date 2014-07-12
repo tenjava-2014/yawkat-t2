@@ -59,3 +59,8 @@ WalkEnergyProducer
 ------------------
 
 Walking around charges you with small amounts of energy. This will never charge your energy above 15, however.
+
+DeathDeductModule
+-----------------
+
+On death, half of the energy a player previously had is removed.

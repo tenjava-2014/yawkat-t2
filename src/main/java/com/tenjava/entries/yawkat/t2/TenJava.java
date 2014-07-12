@@ -56,6 +56,7 @@ public class TenJava extends JavaPlugin {
         Module.load(DischargeCommand.class);
         Module.load(EnergyAddCommand.class);
         Module.load(EnergyRemoveCommand.class);
+        Module.load(DeathDeductModule.class);
         Module.load(DisplayEnergyCommand.class);
         Module.load(StrikeCommand.class);
         Module.load(FurnaceChargeCommand.class);
