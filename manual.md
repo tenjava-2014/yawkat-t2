@@ -1,7 +1,8 @@
 Manual
 ======
 
-This plugin is divided into various modules. Each has a configuration section in modules.yml.
+This plugin is divided into various modules. Each has a configuration section in modules.yml. Individual modules can
+also be enabled / disabled there.
 
 Each player has an "energy account" where their private energy is stored. They can view this account via the */energy*
 command.
