@@ -34,6 +34,8 @@ public class TenJava extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // load core
+
         synchronized (startupTaskQueue) {
             instance = this;
             // run any tasks that were scheduled
@@ -45,6 +47,8 @@ public class TenJava extends JavaPlugin {
         PersistedPlayerData.init();
 
         getServer().getPluginManager().registerEvents(new EnergyLoader(), this);
+
+        // load modules
 
         Module.load(WalkEnergyProducer.class);
         Module.load(TemperatureEnergyProducer.class);
