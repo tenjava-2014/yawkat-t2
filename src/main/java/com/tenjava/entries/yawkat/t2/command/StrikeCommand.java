@@ -30,14 +30,15 @@ class StrikeCommand implements CommandExecutor {
         }
 
         if (!Energy.deductEnergy((Player) sender, COST, Energy.DeductFailurePolicy.FAIL)) {
-            sender.sendMessage(Commands.ERROR_PREFIX + "You need at least " + COST + " energy to do that!");
+            sender.sendMessage(Commands.ERROR_PREFIX + "You need at least " + Commands.toDisplayString(COST) +
+                               " energy to do that!");
             return true;
         }
 
         target.getWorld().strikeLightning(target.getLocation());
 
         sender.sendMessage(ChatColor.GOLD + "Lightning cast for " +
-                           ChatColor.AQUA + COST +
+                           ChatColor.AQUA + Commands.toDisplayString(COST) +
                            ChatColor.GOLD + " energy.");
 
         return true;
