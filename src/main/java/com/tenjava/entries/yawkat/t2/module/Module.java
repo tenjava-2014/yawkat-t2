@@ -31,8 +31,11 @@ public abstract class Module implements Listener {
      */
     public static void load(Class<? extends Module> moduleClass) {
         try {
+            // create module instance
             Module module = moduleClass.newInstance();
+            // plugin should already be started but use the scheduler anyway to be safe
             TenJava.runTaskOnStartup(module::init0);
+            // enable status is checked in #init0
         } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -52,6 +55,9 @@ public abstract class Module implements Listener {
         }
     }
 
+    /**
+     * Load our configuration and then call #init.
+     */
     private void init0() {
         synchronized (Module.class) {
             // load configuration provider if it isn't loaded yet
