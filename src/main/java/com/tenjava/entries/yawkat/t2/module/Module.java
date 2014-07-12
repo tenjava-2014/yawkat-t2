@@ -16,9 +16,13 @@ public abstract class Module implements Listener {
     public static void load(Class<? extends Module> moduleClass) {
         try {
             Module module = moduleClass.newInstance();
-            TenJava.runTaskOnStartup(() -> Bukkit.getPluginManager().registerEvents(module, TenJava.getInstance()));
+            TenJava.runTaskOnStartup(module::init);
         } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected void init() {
+        Bukkit.getPluginManager().registerEvents(this, TenJava.getInstance());
     }
 }

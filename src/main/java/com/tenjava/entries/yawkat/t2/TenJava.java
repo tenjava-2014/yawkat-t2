@@ -2,6 +2,7 @@ package com.tenjava.entries.yawkat.t2;
 
 import com.tenjava.entries.yawkat.t2.command.Commands;
 import com.tenjava.entries.yawkat.t2.module.Module;
+import com.tenjava.entries.yawkat.t2.module.TemperatureEnergyProducer;
 import com.tenjava.entries.yawkat.t2.module.WalkEnergyProducer;
 import com.tenjava.entries.yawkat.t2.persist.PersistedPlayerData;
 import java.util.ArrayDeque;
@@ -50,6 +51,7 @@ public class TenJava extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EnergyLoader(), this);
 
         Module.load(WalkEnergyProducer.class);
+        Module.load(TemperatureEnergyProducer.class);
     }
 
     @Override
